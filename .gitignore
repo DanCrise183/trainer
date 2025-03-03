@@ -1,0 +1,22 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Компилированные файлы
+*.class
+*.jar
+
+# Логи и временные файлы
+logs/
+*.log
+*.tmp
+
+# Кеши и сборочные файлы
+out/
+target/
+bin/
+
+# MacOS
+.DS_Store
