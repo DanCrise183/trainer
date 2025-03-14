@@ -1,18 +1,18 @@
 package ru.emelyanovm.trainer.domain.model;
 
 public class OpenQuestionCard {
-    private final String question;
-    private final String expectedAnswer;
+    private Long id;
+    private String question;
+    private String expectedAnswer;
 
-    public OpenQuestionCard(String question, String expectedAnswer) {
-        if (question == null || question.trim().isEmpty()) {
-            throw new IllegalArgumentException("Вопрос не может быть пустым или null");
-        }
-        if (expectedAnswer == null || expectedAnswer.trim().isEmpty()) {
-            throw new IllegalArgumentException("Ожидаемый ответ не может быть пустым или null");
-        }
+    public OpenQuestionCard(Long id, String question, String expectedAnswer) {
+        this.id = id;
         this.question = question;
         this.expectedAnswer = expectedAnswer;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getQuestion() {
@@ -20,9 +20,6 @@ public class OpenQuestionCard {
     }
 
     public boolean checkAnswer(String answer) {
-        if (answer == null) {
-            return false;
-        }
         return expectedAnswer.equalsIgnoreCase(answer.trim());
     }
 }
