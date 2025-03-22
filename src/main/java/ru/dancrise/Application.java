@@ -1,0 +1,24 @@
+package ru.dancrise;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.dancrise.config.SpringConfig;
+import ru.dancrise.controller.ConsoleController;
+
+import javax.sql.DataSource;
+
+public class Application {
+  public static void main(String[] args) {
+    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+    ConsoleController controller = context.getBean(ConsoleController.class);
+    controller.interactWithUser();
+    DataSource SpringConfig = context.getBean(DataSource.class);
+    System.out.println("DataSource: " + SpringConfig);
+  }
+}
+
+
+
+
+
+
