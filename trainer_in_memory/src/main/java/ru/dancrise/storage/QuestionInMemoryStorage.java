@@ -18,7 +18,7 @@ public class QuestionInMemoryStorage implements QuestionRepository {
   }
 
   @Override
-  public Optional<OpenQuestionCard> findByID(String id) {
+  public Optional<OpenQuestionCard> findByID(Long id) {
     OpenQuestionCard openQuestionCard = question.get(id);
     if (Objects.nonNull(openQuestionCard)) {
       return Optional.of(openQuestionCard);
@@ -29,12 +29,12 @@ public class QuestionInMemoryStorage implements QuestionRepository {
 
   @Override
   public void add(OpenQuestionCard task) {
-    question.put(task.getID(), task);
+    question.put(String.valueOf(task.getId()), task);
   }
 
   @Override
   public void update(OpenQuestionCard task) {
-    question.put(task.getID(), task);
+    question.put(String.valueOf(task.getId()), task);
   }
 
   @Override
