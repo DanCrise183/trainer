@@ -6,90 +6,114 @@
   <groupId>ru.dancrise</groupId>
   <artifactId>trainer1</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>trainer1</name>
-  <url>http://maven.apache.org</url>
+  <modules>
+    <module>trainer_domain</module>
+    <module>trainer_db_jdbc</module>
+    <module>trainer_db_spring_jdbc</module>
+    <module>trainer_ui_console</module>
+    <module>trainer_in_memory</module>
+  </modules>
 
   <properties>
+    <!-- Проектные настройки -->
+    <java.version>15</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>11</java.version> <!-- Убедитесь, что у вас используется Java 11 или выше -->
+    <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
+
+    <!-- Версии сабмодулей -->
+    <domain_module.version>1.0-SNAPSHOT</domain_module.version>
+    <jdbc_module.version>1.0-SNAPSHOT</jdbc_module.version>
+    <spring_jdbc_module.version>1.0-SNAPSHOT</spring_jdbc_module.version>
+
+    <!-- Версии внешних библиотек -->
+    <junit-jupiter-engine.version>5.12.0</junit-jupiter-engine.version>
+    <spring-context.version>7.0.0-M2</spring-context.version>
+    <h2.version>2.3.232</h2.version>
+    <commons-dbcp2.version>2.13.0</commons-dbcp2.version>
   </properties>
 
-  <dependencies>
-    <!-- Зависимость для Spring Boot Web -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <version>2.6.6</version> <!-- Версия Spring Boot -->
-    </dependency>
 
-    <!-- Зависимость для Spring Data JPA -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>2.6.6</version> <!-- Версия Spring Boot -->
-    </dependency>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>ru.dancrise</groupId>
+        <artifactId>trainer_domain</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>ru.dancrise</groupId>
+        <artifactId>trainer_db_jdbc</artifactId>
+        <version>${jdbc_module.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ru.dancrise</groupId>
+        <artifactId>trainer_db_spring_jdbc</artifactId>
+        <version>${spring_jdbc_module.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring-context.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit-jupiter-engine.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring-context.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>${commons-dbcp2.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <!-- Зависимость для H2 базы данных -->
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>2.3.232</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Зависимость для тестов в Spring Boot -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <version>2.6.6</version> <!-- Версия Spring Boot -->
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-    <groupId>javax.xml.bind</groupId>
-    <artifactId>jaxb-api</artifactId>
-    <version>2.3.1</version>
-</dependency>
-<dependency>
-    <groupId>org.glassfish.jaxb</groupId>
-    <artifactId>jaxb-runtime</artifactId>
-    <version>2.3.5</version>
-
-</dependency>
-
-    <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>  <!-- или последняя версия -->
-    </dependency>
-
-        <dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-dbcp2</artifactId>
-    <version>2.12.0</version>  <!-- или последняя версия -->
-    </dependency>
-
-  </dependencies>
 
   <build>
-    <plugins>
-      <!-- Плагин для сборки Spring Boot -->
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.6.6</version> <!-- Версия плагина -->
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>16</source>
-          <target>16</target>
-        </configuration>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+          <configuration>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </configuration>
+          <executions>
+            <execution>
+              <id>assemble-all</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
-
 </project>
