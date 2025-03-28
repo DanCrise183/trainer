@@ -5,12 +5,12 @@ import ru.dancrise.domain.utility.ValidationUtil;
 import java.time.ZonedDateTime;
 
 public class OpenQuestionCard {
-  private final long id;
+  private final Long id;
   private String title;
   private String description;
   private ZonedDateTime deadLine;
 
-  public OpenQuestionCard(long id, String title) {
+  public OpenQuestionCard(Long id, String title) {
     if (id <= 0) {
       throw new IllegalArgumentException("id должен быть положительным числом");
     }
@@ -19,7 +19,7 @@ public class OpenQuestionCard {
     this.title = title;
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
