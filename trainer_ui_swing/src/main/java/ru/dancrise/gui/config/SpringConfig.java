@@ -4,7 +4,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import ru.dancrise.spring.jdbc.config.DbConfig;
+import ru.dancrise.spring.hibernate.config.DbConfig;
+
 
 @Configuration
 @Import(DbConfig.class)
