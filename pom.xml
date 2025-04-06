@@ -24,6 +24,7 @@
     <module>trainer_ui_swing</module>
     <module>trainer_db_spring_hibernate</module>
     <module>trainer_api</module>
+    <module>trainer_http_client</module>
   </modules>
 
   <properties>
@@ -48,6 +49,9 @@
     <jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version>
     <jakarta.transaction-api.version>2.0.1</jakarta.transaction-api.version>
     <log4j.version>2.24.3</log4j.version>
+    <spring-cloud-starter-openfeign.version>4.2.1</spring-cloud-starter-openfeign.version>
+    <feign-okhttp.version>13.5</feign-okhttp.version>
+    <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
     <springdoc-openapi-starter-webmvc-ui.version>2.8.5</springdoc-openapi-starter-webmvc-ui.version>
   </properties>
 
@@ -66,6 +70,16 @@
       </dependency>
       <dependency>
         <groupId>ru.dancrise</groupId>
+        <artifactId>trainer_api</artifactId>
+        <version>${spring_jdbc_module.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ru.dancrise</groupId>
+        <artifactId>trainer_http_client</artifactId>
+        <version>${spring_jdbc_module.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ru.dancrise</groupId>
         <artifactId>trainer_db_spring_jdbc</artifactId>
         <version>${spring_jdbc_module.version}</version>
       </dependency>
@@ -78,6 +92,16 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-openfeign</artifactId>
+        <version>${spring-cloud-starter-openfeign.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${mapstruct.version}</version>
       </dependency>
       <dependency>
         <groupId>ru.dancrise</groupId>
@@ -188,6 +212,45 @@
               </path>
             </annotationProcessorPaths>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>jacoco-report</id>
+              <phase>test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>jacoco-check</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <rule>
+                    <element>PACKAGE</element>
+                    <limits>
+                      <limit>
+                        <counter>LINE</counter>
+                        <value>COVEREDRATIO</value>
+                        <minimum>0.50</minimum>
+                      </limit>
+                    </limits>
+                  </rule>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
