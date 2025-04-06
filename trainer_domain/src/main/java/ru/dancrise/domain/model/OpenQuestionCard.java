@@ -6,9 +6,7 @@ import java.time.ZonedDateTime;
 
 public class OpenQuestionCard {
   private final Long id;
-  private String title;
-  private String description;
-  private ZonedDateTime deadLine;
+  private final String title;
 
   public OpenQuestionCard(Long id, String title) {
     if (id <= 0) {
@@ -27,37 +25,11 @@ public class OpenQuestionCard {
     return title;
   }
 
-  public void setTitle(String title) {
-    ValidationUtil.validateNotEmpty(title, "title не может быть пустым");
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public ZonedDateTime getDeadLine() {
-    return deadLine;
-  }
-
-  public void setDeadLine(ZonedDateTime deadLine) {
-    if (ZonedDateTime.now().isAfter(deadLine)) {
-      throw new IllegalArgumentException("deadLine не может быть в прошлом");
-    }
-    this.deadLine = deadLine;
-  }
-
   @Override
   public String toString() {
-    return "question{" +
+    return "OpenQuestionCard{" +
             "id=" + id +
             ", title='" + title + '\'' +
-            ", description='" + description + '\'' +
-            ", deadLine=" + deadLine +
             '}';
   }
 }

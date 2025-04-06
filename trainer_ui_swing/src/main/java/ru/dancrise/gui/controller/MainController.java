@@ -57,16 +57,30 @@ public class MainController implements Runnable {
         layoutConstraints.gridx = 0;
         layoutConstraints.gridy = 2;
         layoutConstraints.gridwidth = 2;
+
         taskForEdit.ifPresent( t -> {
             codeField.setText(String.valueOf(t.getId()));
             titleField.setText(t.getTitle());
         });
         addButton.addActionListener(event -> {
-            Long id = Long.parseLong(codeField.getText());
-            OpenQuestionCard question = new OpenQuestionCard(id, titleField.getText());
-            service.save(question);
-            prepareMainPanelForListTask();
+            try {
+                Long id = Long.parseLong(codeField.getText());
+                String title = titleField.getText().trim();
+                if(title.isEmpty()) {
+                    JOptionPane.showMessageDialog(mainFrame, "Заголовок не может быть пустым", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                OpenQuestionCard question = new OpenQuestionCard(id, title);
+                service.save(question);
+                prepareMainPanelForListTask();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(mainFrame, "Код должен быть числом", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                // Ловим исключение, которое может возникнуть внутри конструктора OpenQuestionCard
+                JOptionPane.showMessageDialog(mainFrame, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+            }
         });
+
         mainPanel.add(addButton, layoutConstraints);
         mainFrame.add(mainPanel);
         SwingUtilities.updateComponentTreeUI(mainFrame);

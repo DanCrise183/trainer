@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class QuestionTableModel extends AbstractTableModel {
-    private final String[] columnNames = new String[]{"ID", "Tекст", "Oжидаемый ответ"};
+    private final String[] columnNames = new String[]{"ID", "Заголовок"};
     private final List<OpenQuestionCard> questions;
 
     public QuestionTableModel(List<OpenQuestionCard> questions) {
@@ -21,7 +21,7 @@ public class QuestionTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 2;
     }
 
     @Override
